@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Authentication Example</title>
+</head>
+<body>
+
+<script>
+  async function createCredentials() {
+    try {
+      const publicKeyCredentialCreationOptions = {
+        challenge: new Uint8Array(32), // replace with a real challenge from your server
+        rp: {
+          name: 'Example Corporation',
+          id: 'localhost',
+        },
+        user: {
+          id: new Uint8Array(16), // replace with a real user id
+          name: 'john.doe@example.com',
+          displayName: 'John Doe',
+        },
+        pubKeyCredParams: [
+    {
+      alg: -7,
+      type: "public-key"
+    },
+    {
+      "alg": -257,
+      "type": "public-key"
+    }
+  ],
+      };
+
+      const newCredential = await navigator.credentials.create({
+        publicKey: publicKeyCredentialCreationOptions,
+      });
+
+      // Handle the new credential as needed, e.g., send it to the server for verification
+
+      console.log('New credential created:', newCredential);
+    } catch (error) {
+      console.error('Error creating credentials:', error);
+    }
+  }
+
+  // Call the function when the page is loaded
+  createCredentials();
+</script>
+
+</body>
+</html>
